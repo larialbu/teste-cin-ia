@@ -286,3 +286,4 @@ export function buildPrompt({ customer, ticket, contentType, promptVersion = 'v2
     fullPrompt,
   };
 }
+

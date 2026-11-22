@@ -70,3 +70,4 @@ export function setCachedResult(
   fs.writeFileSync(cachePath, JSON.stringify(store, null, 2), 'utf-8');
   return store.entries[cacheKey];
 }
+

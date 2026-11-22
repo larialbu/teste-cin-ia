@@ -109,13 +109,15 @@ flowchart LR
 
 ## 3. Como Executar
 
-### 3.1. Interface CLI Interativa (Menu Guiado)
+### 3.1. Rodar CLI + Interface Web Juntos em um Único Comando
 ```bash
 npm start
 # ou:
 node src/cli.js
 ```
-O menu interativo permite:
+Ao rodar `npm start`, o sistema **sobe automaticamente o servidor Web em `http://localhost:3000` em segundo plano e abre o menu interativo da CLI no terminal ao mesmo tempo**.
+
+O menu interativo (e a interface web) permitem:
 1. Selecionar um dos **5 perfis de cliente** cadastrados em `data/customers.json`;
 2. Selecionar um ticket de exemplo ou digitar um **novo ticket** manualmente;
 3. Escolher qualquer um dos **4 tipos de conteúdo** (`diagnosis`, `resolution_steps`, `clarifying_questions`, `flow_summary`) ou gerar todos de uma vez;
@@ -173,3 +175,4 @@ O diretório [`samples/`](./samples/) contém execuções completas em JSON:
 - [`samples/full_4_contents_cust_03_advanced_v2.json`](./samples/full_4_contents_cust_03_advanced_v2.json): Pacote completo com os 4 tipos de conteúdo gerados para perfil `avançado` (Engenheira DevOps/SRE via `e-mail`).
 
 Para a explicação aprofundada das estratégias de engenharia de prompt, consulte [`PROMPT_ENGINEERING_NOTES.md`](./PROMPT_ENGINEERING_NOTES.md).
+

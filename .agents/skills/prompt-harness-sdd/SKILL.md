@@ -29,3 +29,4 @@ Esta skill guia o ciclo de vida **Specification-Driven Development (SDD)** e exe
      npm test
      ```
    - Todos os testes de contrato, cache determinístico, geradores e rubrica devem passar.
+

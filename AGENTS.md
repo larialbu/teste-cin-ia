@@ -19,3 +19,4 @@ Este repositório segue **Specification-Driven Development (SDD)** e uma arquite
 - **Segurança de Credenciais**: Jamais commitar `.env` ou chaves reais de API (`GEMINI_API_KEY`). Apenas `.env.example` é versionado.
 - **Cache Determinístico**: Toda chamada ao provedor LLM deve passar pelo cache SHA-256 baseado na tupla canônica `(customer_id, ticket, content_type, prompt_version, provider, model, temperature)`.
 - **Comparação Justa (Fair Benchmark Harness)**: Ao comparar duas versões de prompt (`v1` vs `v2`), o Harness deve travar (`lock`) cliente, ticket, provedor, modelo e temperatura, variando **exclusivamente** a versão do prompt, e registrar a avaliação sob a rubrica fixa de 3 critérios (`clarity`, `customer_fit`, `actionability`, escala 1 a 5 + justificativa).
+

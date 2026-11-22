@@ -6,3 +6,4 @@ Antes de considerar qualquer mudança concluída, verifique:
 3. O cache evita chamadas duplicadas para a mesma chave canônica SHA-256.
 4. `samples/` e `data/history.json` contêm execuções reais e a comparação completa `v1` vs `v2` com as 3 notas e justificativas da rubrica.
 5. `PROMPT_ENGINEERING_NOTES.md` documenta a arquitetura dos prompts, diferenças entre `v1` e `v2`, trade-offs e limitações.
+

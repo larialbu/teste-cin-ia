@@ -73,3 +73,4 @@ Cenário avaliado no Harness (salvo em [`samples/comparison_v1_vs_v2_diagnosis_c
 3. **Dual-Mode LLM Engine (Google Gemini API + Simulador Determinístico Offline)**:
    - *Decisão*: O sistema conecta nativamente à API `generativelanguage.googleapis.com` (`gemini-2.5-flash`) quando `GEMINI_API_KEY` está configurada no `.env`, e conta com um simulador determinístico sensível às diferenças entre `v1` e `v2` para execução offline, testes automatizados (`npm test`) e avaliação reprodutível sem expor segredos no repositório.
    - *Limitação*: O modo simulado cobre com alta fidelidade os cenários de referência e perfis cadastrados, enquanto variações abertas de domínio dependem da chave `GEMINI_API_KEY` ativa para inferência generativa completa.
+

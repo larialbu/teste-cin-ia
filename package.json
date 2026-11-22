@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node src/cli.js",
+    "dev": "node src/cli.js",
     "cli": "node src/cli.js",
     "harness": "node src/cli.js compare --preset default",
     "web": "node src/web/server.js",
@@ -29,3 +30,4 @@
     "node": ">=18.0.0"
   }
 }
+

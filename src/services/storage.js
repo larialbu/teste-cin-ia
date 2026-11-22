@@ -57,3 +57,4 @@ export function saveSampleFile(filename, payload, samplesDir = getConfig().paths
   fs.writeFileSync(fullPath, JSON.stringify(payload, null, 2), 'utf-8');
   return fullPath;
 }
+

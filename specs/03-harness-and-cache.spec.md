@@ -39,3 +39,4 @@ O Harness executa experimentos controlados (A/B entre `v1` e `v2`):
 3. Valida ambos os outputs contra os contratos SDD (`src/schemas/validator.js`).
 4. Aplica/registra a avaliação segundo a rubrica obrigatória de 3 critérios (`clarity`, `customer_fit`, `actionability`, notas de 1 a 5 + justificativa).
 5. Salva a comparação consolidada em `data/history.json` e exporta artefatos prontos em `samples/`.
+

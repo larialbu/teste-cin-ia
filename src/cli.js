@@ -16,8 +16,9 @@ import {
   loadTickets,
   saveSampleFile,
 } from './services/storage.js';
+import { startWebServer } from './web/server.js';
 
-function printBanner() {
+function printBanner(webStatus = null) {
   console.log('======================================================================');
   console.log('  ASSISTENTE DE SUPORTE TÉCNICO | SDD & PROMPT EVALUATION HARNESS');
   console.log('======================================================================');
@@ -25,6 +26,11 @@ function printBanner() {
   console.log(
     `  Provedor Ativo: ${cfg.provider.toUpperCase()} | Modelo: ${cfg.model} | Temp: ${cfg.temperature}`
   );
+  if (webStatus) {
+    console.log(
+      `  Interface Web Ativa: http://localhost:${webStatus.port} (rodando junto com a CLI)`
+    );
+  }
   console.log('======================================================================\n');
 }
 
@@ -196,7 +202,8 @@ async function runSeedSamples() {
 }
 
 async function runInteractiveCli() {
-  printBanner();
+  const webStatus = await startWebServer();
+  printBanner(webStatus);
   const rl = readline.createInterface({ input, output });
   try {
     const customers = loadCustomers();
@@ -369,6 +376,11 @@ async function runInteractiveCli() {
     }
   } finally {
     rl.close();
+    if (webStatus?.server) {
+      console.log(
+        `\n[WEB] A Interface Web continua ativa em: http://localhost:${webStatus.port} (Pressione Ctrl+C para encerrar)`
+      );
+    }
   }
 }
 
@@ -476,3 +488,4 @@ main().catch((err) => {
   console.error('\n[ERRO DE EXECUÇÃO]:', err.message);
   process.exit(1);
 });
+

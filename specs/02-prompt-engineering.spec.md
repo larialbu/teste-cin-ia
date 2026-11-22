@@ -19,3 +19,4 @@ O módulo `src/services/generators.js` deve expor 4 funções independentes:
 - `generateResolutionSteps(params)`
 - `generateClarifyingQuestions(params)`
 - `generateFlowSummary(params)`
+

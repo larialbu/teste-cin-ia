@@ -326,12 +326,27 @@ export function createWebServer() {
   });
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const port = getConfig().port;
+export function startWebServer(port = getConfig().port) {
   const server = createWebServer();
-  server.listen(port, () => {
+  return new Promise((resolve, reject) => {
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        resolve({ server: null, port, alreadyRunning: true });
+      } else {
+        reject(err);
+      }
+    });
+    server.listen(port, () => {
+      resolve({ server, port, alreadyRunning: false });
+    });
+  });
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  startWebServer().then(({ port }) => {
     console.log(
       `Interface Web do Prompt Evaluation Harness rodando em: http://localhost:${port}`
     );
   });
 }
+

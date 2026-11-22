@@ -211,3 +211,4 @@ test('MCP Server: Deve listar ferramentas e responder chamadas JSON-RPC corretam
   const profiles = JSON.parse(callResp.result.content[0].text);
   assert.ok(profiles.length >= 3);
 });
+

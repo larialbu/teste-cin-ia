@@ -18,3 +18,4 @@
 - `clarity`: Clareza, organização e ausência de ambiguidade.
 - `customer_fit`: Adequação de vocabulário, profundidade e tom ao perfil selecionado.
 - `actionability`: Capacidade do cliente ou atendente saber exatamente o próximo passo concreto.
+
