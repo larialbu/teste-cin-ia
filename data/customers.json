@@ -1,0 +1,37 @@
+[
+  {
+    "id": "cust_01",
+    "name": "Dona Helena (Lojista de Bairro)",
+    "technical_level": "leigo",
+    "communication_style": "didático",
+    "channel": "chat"
+  },
+  {
+    "id": "cust_02",
+    "name": "Carlos Mendes (Analista Financeiro)",
+    "technical_level": "intermediário",
+    "communication_style": "direto",
+    "channel": "telefone"
+  },
+  {
+    "id": "cust_03",
+    "name": "Fernanda Costa (Engenheira DevOps / SRE)",
+    "technical_level": "avançado",
+    "communication_style": "detalhado",
+    "channel": "e-mail"
+  },
+  {
+    "id": "cust_04",
+    "name": "Roberto Almeida (Gerente de Operações)",
+    "technical_level": "intermediário",
+    "communication_style": "detalhado",
+    "channel": "e-mail"
+  },
+  {
+    "id": "cust_05",
+    "name": "Lucas Ferreira (Desenvolvedor Backend)",
+    "technical_level": "avançado",
+    "communication_style": "direto",
+    "channel": "chat"
+  }
+]

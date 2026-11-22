@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "support-prompt-harness": {
+      "command": "node",
+      "args": ["src/mcp/server.js"],
+      "env": {
+        "LLM_PROVIDER": "mock"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tkt_01",
+    "title": "Falha ao finalizar pagamento com cartão / Webhook 502",
+    "description": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+    "recommended_customers": ["cust_01", "cust_03"]
+  },
+  {
+    "id": "tkt_02",
+    "title": "Lentidão e erro ao exportar relatório mensal em CSV",
+    "description": "Preciso baixar o relatório de fechamento do mês passado em CSV. Quando filtro o período de 30 dias e clico em Exportar, a barra trava em 85% e o navegador mostra que a página parou de responder.",
+    "recommended_customers": ["cust_02", "cust_04"]
+  },
+  {
+    "id": "tkt_03",
+    "title": "Rejeição 401 Unauthorized intermitente na API de Pedidos",
+    "description": "Nossa integração via API começou a receber HTTP 401 Unauthorized em cerca de 20% das chamadas POST /v2/orders após a rotação do token OAuth, mesmo com o token dentro da validade de 3600s.",
+    "recommended_customers": ["cust_03", "cust_05"]
+  }
+]
