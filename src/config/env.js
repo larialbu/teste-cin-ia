@@ -38,21 +38,9 @@ export function getConfig(overrides = {}) {
   const hasRealApiKey =
     Boolean(apiKey) && apiKey !== 'your_gemini_api_key_here';
 
-  const requestedProvider = (
-    overrides.provider ??
-    process.env.LLM_PROVIDER ??
-    (hasRealApiKey ? 'gemini' : 'mock')
-  ).toLowerCase();
-
-  const provider =
-    requestedProvider === 'gemini' && !hasRealApiKey
-      ? 'mock'
-      : requestedProvider;
-
+  const provider = 'gemini';
   const model =
-    overrides.model ??
-    process.env.GEMINI_MODEL ??
-    (provider === 'gemini' ? 'gemini-3.8-flash' : 'gemini-3.8-flash-simulated');
+    overrides.model ?? process.env.GEMINI_MODEL ?? 'gemini-3.8-flash';
 
   const temperature = Number(
     overrides.temperature ?? process.env.LLM_TEMPERATURE ?? 0.2
@@ -60,11 +48,10 @@ export function getConfig(overrides = {}) {
 
   const maskedApiKey = hasRealApiKey
     ? `${apiKey.slice(0, 6)}...${apiKey.slice(-4)} (tamanho: ${apiKey.length} chars)`
-    : 'NÃO CONFIGURADA (usando modo mock)';
+    : 'NÃO CONFIGURADA (defina GEMINI_API_KEY no arquivo .env)';
 
   return {
     provider,
-    requestedProvider,
     hasRealApiKey,
     apiKey,
     maskedApiKey,
@@ -80,4 +67,3 @@ export function getConfig(overrides = {}) {
     },
   };
 }
-

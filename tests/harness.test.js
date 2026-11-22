@@ -91,8 +91,8 @@ test('Spec 02 & 03: As 4 funções geradoras devem produzir JSON válido e o cac
     ticket,
     contentType: 'diagnosis',
     promptVersion: 'v2',
-    provider: 'mock',
-    model: 'gemini-2.5-flash-simulated',
+    provider: 'gemini',
+    model: 'gemini-3.8-flash',
     temperature: 0.2,
   });
   const key2 = computeCacheKey({
@@ -100,8 +100,8 @@ test('Spec 02 & 03: As 4 funções geradoras devem produzir JSON válido e o cac
     ticket: `  ${ticket}  `,
     contentType: 'diagnosis',
     promptVersion: 'v2',
-    provider: 'mock',
-    model: 'gemini-2.5-flash-simulated',
+    provider: 'gemini',
+    model: 'gemini-3.8-flash',
     temperature: 0.2,
   });
   assert.equal(

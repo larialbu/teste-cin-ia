@@ -107,23 +107,20 @@ async function runGenerationStrategy({
       );
     }
 
-    // Só salva no cache definitivo se não foi um fallback de erro de rede/API
-    if (actualProvider !== 'mock-fallback') {
-      setCachedResult(
-        cacheKey,
-        {
-          customer_id: customer.id,
-          ticket: ticket.trim(),
-          content_type: contentType,
-          prompt_version: promptObj.promptVersion,
-          provider: actualProvider,
-          model: actualModel,
-          temperature: cfg.temperature,
-          output,
-        },
-        cfg.paths.cache
-      );
-    }
+    setCachedResult(
+      cacheKey,
+      {
+        customer_id: customer.id,
+        ticket: ticket.trim(),
+        content_type: contentType,
+        prompt_version: promptObj.promptVersion,
+        provider: actualProvider,
+        model: actualModel,
+        temperature: cfg.temperature,
+        output,
+      },
+      cfg.paths.cache
+    );
   }
 
   const record = {
