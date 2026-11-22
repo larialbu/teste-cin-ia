@@ -1,0 +1,158 @@
+{
+  "harness_run_id": "harness_1795309019308",
+  "timestamp": "2026-11-22T00:56:59.308Z",
+  "controlled_variables": {
+    "customer_id": "cust_01",
+    "customer_name": "Dona Helena (Lojista de Bairro)",
+    "technical_level": "leigo",
+    "communication_style": "didático",
+    "channel": "chat",
+    "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+    "content_type": "diagnosis",
+    "provider": "mock",
+    "model": "gemini-2.5-flash-simulated",
+    "temperature": 0.2
+  },
+  "rubric_scale": "1 = insuficiente, 2 = fraco, 3 = adequado, 4 = bom, 5 = excelente",
+  "score_comparison_summary": [
+    {
+      "prompt_version": "v1",
+      "clarity": 3,
+      "customer_fit": 2,
+      "actionability": 3,
+      "average_score": 2.67,
+      "cache_hit": true
+    },
+    {
+      "prompt_version": "v2",
+      "clarity": 5,
+      "customer_fit": 5,
+      "actionability": 5,
+      "average_score": 5,
+      "cache_hit": true
+    }
+  ],
+  "winner": "v2",
+  "executions": [
+    {
+      "id": "exec_56d42639",
+      "timestamp": "2026-11-22T00:56:59.307Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v1",
+      "content_type": "diagnosis",
+      "provider": "mock",
+      "model": "gemini-2.5-flash-simulated",
+      "temperature": 0.2,
+      "cache_key": "45ee61971b925f725b804adf13155b3d018d84fd4fafd7c4943acba8cf635474",
+      "cache_hit": true,
+      "output": {
+        "summary": "Análise técnica do ticket para Dona Helena (Lojista de Bairro): detectada falha de comunicação ou timeout de processamento durante a operação relatada.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Timeout de upstream (HTTP 502 Bad Gateway) entre o backend da plataforma e o adquirente/gateway de cartão após 30s.",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "Transação processada no gateway sem retorno do webhook de confirmação (risco de retentativa sem chave de idempotência).",
+            "likelihood": "média"
+          }
+        ],
+        "available_evidence": [
+          "Latência de ~30 segundos seguida de código HTTP 502 a partir das 14h."
+        ],
+        "missing_data": [
+          "ID da transação/requisição nos logs do servidor.",
+          "Confirmação do status atual do registro no banco de dados."
+        ],
+        "probable_conclusion": "Necessário verificar o status da operação no backend antes de reexecutar a chamada para evitar efeitos colaterais."
+      },
+      "evaluation": {
+        "clarity": {
+          "score": 3,
+          "justification": "A saída da v1 é estruturada nos campos solicitados e gramaticalmente compreensível, porém apresenta termos técnicos sem contextualização e pouca formatação voltada à leitura rápida no canal do cliente."
+        },
+        "customer_fit": {
+          "score": 2,
+          "justification": "Fraca adequação ao perfil leigo/didático: a v1 utiliza jargões de engenharia (upstream timeout, idempotência, commit/rollback, Request-ID) que geram insegurança e confusão para uma lojista não técnica no chat."
+        },
+        "actionability": {
+          "score": 3,
+          "justification": "Embora sugira verificar o status antes de repetir a ação, as instruções da v1 pedem ações pouco práticas para o usuário (como inspecionar logs de servidor ou arquivo HAR no F12), reduzindo a capacidade de execução imediata."
+        }
+      }
+    },
+    {
+      "id": "exec_0c20ff3d",
+      "timestamp": "2026-11-22T00:56:59.308Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v2",
+      "content_type": "diagnosis",
+      "provider": "mock",
+      "model": "gemini-2.5-flash-simulated",
+      "temperature": 0.2,
+      "cache_key": "a7423a86e560ced4d8c95c4efa1cae3b3ceb837206d251359035998f95f0b6cf",
+      "cache_hit": true,
+      "output": {
+        "summary": "Olá, Dona Helena! O erro que apareceu na sua tela significa apenas que a conexão com a operadora do cartão demorou mais que o normal (30 segundos) e a resposta não voltou a tempo para a sua tela. Fique tranquila: vamos conferir se a venda já entrou antes de tentar passar o cartão de novo, assim não há risco de cobrar duas vezes.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Lentidão temporária na resposta da operadora do cartão às 14h (o sistema esperou 30 segundos e encerrou a espera por segurança).",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "O pagamento pode ter sido aprovado na operadora no último segundo, mas o aviso de confirmação ainda não atualizou na tela da sua loja.",
+            "likelihood": "média"
+          },
+          {
+            "id": "H3",
+            "description": "Oscilação rápida na internet da loja no momento em que o botão \"Finalizar pagamento\" foi clicado.",
+            "likelihood": "baixa"
+          }
+        ],
+        "available_evidence": [
+          "As tentativas começaram por volta das 14h.",
+          "A tela ficou carregando por cerca de 30 segundos após clicar em finalizar pagamento.",
+          "Mensagem exibida: \"Erro 502 - Falha na comunicação com o gateway\" (indica falta de resposta da operadora)."
+        ],
+        "missing_data": [
+          "Saber se o pedido aparece como \"Pago\" ou \"Pendente\" na sua lista de Minhas Vendas.",
+          "Saber se o cliente recebeu algum SMS ou notificação do banco no celular dele.",
+          "Número ou valor aproximado dessa venda das 14h."
+        ],
+        "probable_conclusion": "Houve uma falha momentânea de comunicação com a operadora do cartão. O passo mais importante agora é olhar a tela \"Minhas Vendas\" para confirmar se a cobrança entrou antes de tentar passar o cartão novamente."
+      },
+      "evaluation": {
+        "clarity": {
+          "score": 5,
+          "justification": "Excelente organização visual e precisão: a v2 separa claramente fatos, hipóteses numeradas (H1-H3) e passos verificáveis, eliminando ambiguidades e tranquilizando o cliente logo na abertura."
+        },
+        "customer_fit": {
+          "score": 5,
+          "justification": "Totalmente calibrada ao perfil (leigo, estilo didático, canal chat): a matriz da v2 traduz o Erro 502/timeout para a linguagem exata do usuário e adapta o formato ao canal chat."
+        },
+        "actionability": {
+          "score": 5,
+          "justification": "Altamente acionável: o primeiro passo previne efeitos colaterais (como cobrança duplicada em \"Minhas Vendas\" ou retry sem idempotência), cada etapa indica exatamente o que observar na tela e há um plano de fallback claro."
+        }
+      }
+    }
+  ]
+}

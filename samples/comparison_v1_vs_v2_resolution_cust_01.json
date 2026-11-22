@@ -1,0 +1,154 @@
+{
+  "harness_run_id": "harness_1795309019084",
+  "timestamp": "2026-11-22T00:56:59.084Z",
+  "controlled_variables": {
+    "customer_id": "cust_01",
+    "customer_name": "Dona Helena (Lojista de Bairro)",
+    "technical_level": "leigo",
+    "communication_style": "didático",
+    "channel": "chat",
+    "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+    "content_type": "resolution_steps",
+    "provider": "mock",
+    "model": "gemini-2.5-flash-simulated",
+    "temperature": 0.2
+  },
+  "rubric_scale": "1 = insuficiente, 2 = fraco, 3 = adequado, 4 = bom, 5 = excelente",
+  "score_comparison_summary": [
+    {
+      "prompt_version": "v1",
+      "clarity": 3,
+      "customer_fit": 2,
+      "actionability": 3,
+      "average_score": 2.67,
+      "cache_hit": true
+    },
+    {
+      "prompt_version": "v2",
+      "clarity": 5,
+      "customer_fit": 5,
+      "actionability": 5,
+      "average_score": 5,
+      "cache_hit": true
+    }
+  ],
+  "winner": "v2",
+  "executions": [
+    {
+      "id": "exec_d313ff54",
+      "timestamp": "2026-11-22T00:56:59.084Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v1",
+      "content_type": "resolution_steps",
+      "provider": "mock",
+      "model": "gemini-2.5-flash-simulated",
+      "temperature": 0.2,
+      "cache_key": "1594af6af439a22ee9a1288a2991f455b3e7c1a4a9ab01b9454d7e3e77a6c0e8",
+      "cache_hit": true,
+      "output": {
+        "greeting_and_tone": "Olá Dona Helena (Lojista de Bairro), seguem os passos técnicos para resolver o problema relatado no ticket.",
+        "estimated_time": "5 minutos",
+        "steps": [
+          {
+            "step_number": 1,
+            "action": "Verificar status da transação/requisição no sistema",
+            "explanation": "Acesse o painel administrativo ou logs de transação para checar se o processo retornou commit ou rollback após o erro.",
+            "expected_result": "Identificar o status atual do registro."
+          },
+          {
+            "step_number": 2,
+            "action": "Limpar cache de sessão e repetir a operação",
+            "explanation": "Limpe os dados de sessão do navegador (Ctrl+Shift+Del) e reenvie o formulário.",
+            "expected_result": "Operação concluída com status HTTP 200."
+          },
+          {
+            "step_number": 3,
+            "action": "Acionar suporte nível 2 com logs",
+            "explanation": "Capture o HAR ou log do console (F12 > Network) caso o erro persista.",
+            "expected_result": "Evidência técnica anexada ao chamado."
+          }
+        ],
+        "fallback_plan": "Se o erro continuar, abra um incidente com os logs de rede para análise do time de engenharia."
+      },
+      "evaluation": {
+        "clarity": {
+          "score": 3,
+          "justification": "A saída da v1 é estruturada nos campos solicitados e gramaticalmente compreensível, porém apresenta termos técnicos sem contextualização e pouca formatação voltada à leitura rápida no canal do cliente."
+        },
+        "customer_fit": {
+          "score": 2,
+          "justification": "Fraca adequação ao perfil leigo/didático: a v1 utiliza jargões de engenharia (upstream timeout, idempotência, commit/rollback, Request-ID) que geram insegurança e confusão para uma lojista não técnica no chat."
+        },
+        "actionability": {
+          "score": 3,
+          "justification": "Embora sugira verificar o status antes de repetir a ação, as instruções da v1 pedem ações pouco práticas para o usuário (como inspecionar logs de servidor ou arquivo HAR no F12), reduzindo a capacidade de execução imediata."
+        }
+      }
+    },
+    {
+      "id": "exec_3ede46c5",
+      "timestamp": "2026-11-22T00:56:59.084Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v2",
+      "content_type": "resolution_steps",
+      "provider": "mock",
+      "model": "gemini-2.5-flash-simulated",
+      "temperature": 0.2,
+      "cache_key": "8e0f3ebe8dab05558dfa5a2208d8cb37de4830a95add7bea496da0fc1446de94",
+      "cache_hit": true,
+      "output": {
+        "greeting_and_tone": "Oi, Dona Helena! Vamos resolver isso juntos agora mesmo aqui pelo chat, passo a passo e com toda segurança para não cobrar seu cliente duas vezes:",
+        "estimated_time": "2 a 3 minutos",
+        "steps": [
+          {
+            "step_number": 1,
+            "action": "Conferir se a venda já entrou (evitar cobrança dupla)",
+            "explanation": "No menu lateral esquerdo da sua tela, clique em \"Minhas Vendas\" e olhe o primeiro pedido da lista (o das 14h). Veja também com o cliente se chegou alguma mensagem do banco no celular dele.",
+            "expected_result": "Se estiver escrito \"Aprovada\" (em verde), a venda já deu certo e você não precisa cobrar de novo! Se estiver \"Não finalizada\" ou não aparecer, siga para o Passo 2."
+          },
+          {
+            "step_number": 2,
+            "action": "Atualizar a tela de vendas para limpar a falha temporária",
+            "explanation": "Aperte a tecla F5 do seu teclado (ou clique na setinha circular ao lado do endereço lá no topo da tela) para renovar a conexão com a operadora do cartão.",
+            "expected_result": "A tela de caixa vai recarregar limpa, sem a mensagem de Erro 502."
+          },
+          {
+            "step_number": 3,
+            "action": "Finalizar a venda novamente com segurança",
+            "explanation": "Com a certeza de que a venda anterior não foi cobrada, preencha os dados do pagamento e clique uma única vez em \"Finalizar pagamento\", aguardando até 10 segundos.",
+            "expected_result": "Aparecerá na tela a mensagem verde \"Pagamento Aprovado\" e o comprovante para impressão."
+          }
+        ],
+        "fallback_plan": "Se a mensagem de Erro 502 aparecer mais uma vez, não tente uma terceira vez: me mande aqui no chat o valor da venda e os 4 últimos números do cartão que eu consulto direto no sistema para você!"
+      },
+      "evaluation": {
+        "clarity": {
+          "score": 5,
+          "justification": "Excelente organização visual e precisão: a v2 separa claramente fatos, hipóteses numeradas (H1-H3) e passos verificáveis, eliminando ambiguidades e tranquilizando o cliente logo na abertura."
+        },
+        "customer_fit": {
+          "score": 5,
+          "justification": "Totalmente calibrada ao perfil (leigo, estilo didático, canal chat): a matriz da v2 traduz o Erro 502/timeout para a linguagem exata do usuário e adapta o formato ao canal chat."
+        },
+        "actionability": {
+          "score": 5,
+          "justification": "Altamente acionável: o primeiro passo previne efeitos colaterais (como cobrança duplicada em \"Minhas Vendas\" ou retry sem idempotência), cada etapa indica exatamente o que observar na tela e há um plano de fallback claro."
+        }
+      }
+    }
+  ]
+}
