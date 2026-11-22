@@ -73,7 +73,19 @@ async function runGenerationStrategy({
     output = cached.output;
     actualProvider = cached.provider || cfg.provider;
     actualModel = cached.model || cfg.model;
+    console.log(
+      `[CACHE HIT] Chave SHA-256 encontrada (${cacheKey.slice(
+        0,
+        12
+      )}...) para ${contentType} (${promptObj.promptVersion}). Evitando chamada repetida à API!`
+    );
   } else {
+    console.log(
+      `[CACHE MISS] Chave SHA-256 (${cacheKey.slice(
+        0,
+        12
+      )}...) não encontrada. Acionando provedor ${cfg.provider.toUpperCase()}...`
+    );
     const llmResult = await executeLlmCall({
       promptObj,
       customer,
@@ -95,20 +107,23 @@ async function runGenerationStrategy({
       );
     }
 
-    setCachedResult(
-      cacheKey,
-      {
-        customer_id: customer.id,
-        ticket: ticket.trim(),
-        content_type: contentType,
-        prompt_version: promptObj.promptVersion,
-        provider: actualProvider,
-        model: actualModel,
-        temperature: cfg.temperature,
-        output,
-      },
-      cfg.paths.cache
-    );
+    // Só salva no cache definitivo se não foi um fallback de erro de rede/API
+    if (actualProvider !== 'mock-fallback') {
+      setCachedResult(
+        cacheKey,
+        {
+          customer_id: customer.id,
+          ticket: ticket.trim(),
+          content_type: contentType,
+          prompt_version: promptObj.promptVersion,
+          provider: actualProvider,
+          model: actualModel,
+          temperature: cfg.temperature,
+          output,
+        },
+        cfg.paths.cache
+      );
+    }
   }
 
   const record = {

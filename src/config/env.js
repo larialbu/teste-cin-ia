@@ -52,17 +52,22 @@ export function getConfig(overrides = {}) {
   const model =
     overrides.model ??
     process.env.GEMINI_MODEL ??
-    (provider === 'gemini' ? 'gemini-2.5-flash' : 'gemini-2.5-flash-simulated');
+    (provider === 'gemini' ? 'gemini-3.8-flash' : 'gemini-3.8-flash-simulated');
 
   const temperature = Number(
     overrides.temperature ?? process.env.LLM_TEMPERATURE ?? 0.2
   );
+
+  const maskedApiKey = hasRealApiKey
+    ? `${apiKey.slice(0, 6)}...${apiKey.slice(-4)} (tamanho: ${apiKey.length} chars)`
+    : 'NÃO CONFIGURADA (usando modo mock)';
 
   return {
     provider,
     requestedProvider,
     hasRealApiKey,
     apiKey,
+    maskedApiKey,
     model,
     temperature: Number.isNaN(temperature) ? 0.2 : temperature,
     port: Number(process.env.PORT ?? 3000),

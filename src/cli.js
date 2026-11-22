@@ -26,6 +26,7 @@ function printBanner(webStatus = null) {
   console.log(
     `  Provedor Ativo: ${cfg.provider.toUpperCase()} | Modelo: ${cfg.model} | Temp: ${cfg.temperature}`
   );
+  console.log(`  GEMINI_API_KEY: ${cfg.maskedApiKey}`);
   if (webStatus) {
     console.log(
       `  Interface Web Ativa: http://localhost:${webStatus.port} (rodando junto com a CLI)`

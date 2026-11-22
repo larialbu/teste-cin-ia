@@ -27,10 +27,23 @@ export function parseJsonFromModelText(rawText) {
 /**
  * Chamada HTTP real para a API do Google Gemini (generateContent) usando fetch nativo do Node.js.
  */
-async function callGeminiApi({ prompt, model, apiKey, temperature }) {
+async function callGeminiApi({
+  prompt,
+  model,
+  apiKey,
+  temperature,
+  contentType,
+  promptVersion,
+}) {
+  const maskedKey = `${apiKey.slice(0, 6)}...${apiKey.slice(-4)}`;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
     model
   )}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+  const startMs = Date.now();
+  console.log(
+    `\n[GEMINI API -> REQUEST] Modelo: ${model} | Key: ${maskedKey} | Tipo: ${contentType} | Versão Prompt: ${promptVersion} | Temp: ${temperature}`
+  );
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -44,17 +57,34 @@ async function callGeminiApi({ prompt, model, apiKey, temperature }) {
     }),
   });
 
+  const elapsedMs = Date.now() - startMs;
+
   if (!response.ok) {
     const errorBody = await response.text();
+    console.error(
+      `[GEMINI API <- ERROR] HTTP ${response.status} (${elapsedMs}ms): ${errorBody.slice(
+        0,
+        300
+      )}`
+    );
     throw new Error(
       `Erro na API Gemini (HTTP ${response.status}): ${errorBody.slice(0, 300)}`
     );
   }
 
   const data = await response.json();
+  const usage = data?.usageMetadata || {};
   const text =
     data?.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('') ||
     '';
+
+  console.log(
+    `[GEMINI API <- SUCCESS] HTTP ${response.status} (${elapsedMs}ms) | Tokens Prompt: ${
+      usage.promptTokenCount ?? '?'
+    } | Tokens Resposta: ${usage.candidatesTokenCount ?? '?'} | Total Tokens: ${
+      usage.totalTokenCount ?? '?'
+    }`
+  );
 
   return parseJsonFromModelText(text);
 }
@@ -609,6 +639,8 @@ export async function executeLlmCall({
         model: cfg.model,
         apiKey: cfg.apiKey,
         temperature: cfg.temperature,
+        contentType,
+        promptVersion,
       });
       return {
         provider: 'gemini',
@@ -617,6 +649,9 @@ export async function executeLlmCall({
         output,
       };
     } catch (err) {
+      console.warn(
+        `[GEMINI API -> FALLBACK] A chamada real falhou (${err.message}). Acionando fallback simulado.`
+      );
       if (configOverrides.strictRealApi) {
         throw err;
       }

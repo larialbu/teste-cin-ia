@@ -118,7 +118,7 @@ const HTML_PAGE = `<!DOCTYPE html>
       customers = data.customers;
       tickets = data.tickets;
       document.getElementById('providerBadge').textContent =
-        data.config.provider.toUpperCase() + ' | ' + data.config.model;
+        data.config.provider.toUpperCase() + ' | ' + data.config.model + ' | Key: ' + data.config.maskedApiKey;
 
       const cSel = document.getElementById('customerSelect');
       customers.forEach(c => {
@@ -218,6 +218,7 @@ export function createWebServer() {
             provider: cfg.provider,
             model: cfg.model,
             temperature: cfg.temperature,
+            maskedApiKey: cfg.maskedApiKey,
             historyPath: cfg.paths.history,
           },
         })

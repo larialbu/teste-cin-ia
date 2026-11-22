@@ -503,6 +503,286 @@
         "probable_conclusion": "Necessário verificar o status da operação no backend antes de reexecutar a chamada para evitar efeitos colaterais."
       },
       "cached_at": "2026-11-22T00:59:12.141Z"
+    },
+    "51c2284c17236f8185a602f1960c234d5850d010fd032f397be9aa28081ba678": {
+      "customer_id": "cust_01",
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "content_type": "diagnosis",
+      "prompt_version": "v1",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: fetch failed)",
+      "temperature": 0.2,
+      "output": {
+        "summary": "Análise técnica do ticket para Dona Helena (Lojista de Bairro): detectada falha de comunicação ou timeout de processamento durante a operação relatada.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Timeout de upstream (HTTP 502 Bad Gateway) entre o backend da plataforma e o adquirente/gateway de cartão após 30s.",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "Transação processada no gateway sem retorno do webhook de confirmação (risco de retentativa sem chave de idempotência).",
+            "likelihood": "média"
+          }
+        ],
+        "available_evidence": [
+          "Latência de ~30 segundos seguida de código HTTP 502 a partir das 14h."
+        ],
+        "missing_data": [
+          "ID da transação/requisição nos logs do servidor.",
+          "Confirmação do status atual do registro no banco de dados."
+        ],
+        "probable_conclusion": "Necessário verificar o status da operação no backend antes de reexecutar a chamada para evitar efeitos colaterais."
+      },
+      "cached_at": "2026-11-22T01:01:12.261Z"
+    },
+    "c7282b15bf661357a15ec27cb06beaf05596c060bb08f6793a83187e7ed29d9d": {
+      "customer_id": "cust_01",
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "content_type": "diagnosis",
+      "prompt_version": "v2",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: fetch failed)",
+      "temperature": 0.2,
+      "output": {
+        "summary": "Olá, Dona Helena! O erro que apareceu na sua tela significa apenas que a conexão com a operadora do cartão demorou mais que o normal (30 segundos) e a resposta não voltou a tempo para a sua tela. Fique tranquila: vamos conferir se a venda já entrou antes de tentar passar o cartão de novo, assim não há risco de cobrar duas vezes.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Lentidão temporária na resposta da operadora do cartão às 14h (o sistema esperou 30 segundos e encerrou a espera por segurança).",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "O pagamento pode ter sido aprovado na operadora no último segundo, mas o aviso de confirmação ainda não atualizou na tela da sua loja.",
+            "likelihood": "média"
+          },
+          {
+            "id": "H3",
+            "description": "Oscilação rápida na internet da loja no momento em que o botão \"Finalizar pagamento\" foi clicado.",
+            "likelihood": "baixa"
+          }
+        ],
+        "available_evidence": [
+          "As tentativas começaram por volta das 14h.",
+          "A tela ficou carregando por cerca de 30 segundos após clicar em finalizar pagamento.",
+          "Mensagem exibida: \"Erro 502 - Falha na comunicação com o gateway\" (indica falta de resposta da operadora)."
+        ],
+        "missing_data": [
+          "Saber se o pedido aparece como \"Pago\" ou \"Pendente\" na sua lista de Minhas Vendas.",
+          "Saber se o cliente recebeu algum SMS ou notificação do banco no celular dele.",
+          "Número ou valor aproximado dessa venda das 14h."
+        ],
+        "probable_conclusion": "Houve uma falha momentânea de comunicação com a operadora do cartão. O passo mais importante agora é olhar a tela \"Minhas Vendas\" para confirmar se a cobrança entrou antes de tentar passar o cartão novamente."
+      },
+      "cached_at": "2026-11-22T01:01:12.264Z"
+    },
+    "b0657abe20eb9c786ddc7080f15b9dc38cf58ac796643e78f54790e767792794": {
+      "customer_id": "cust_02",
+      "ticket": "Nossa integração via API começou a receber HTTP 401 Unauthorized em cerca de 20% das chamadas POST /v2/orders após a rotação do token OAuth, mesmo com o token dentro da validade de 3600s.",
+      "content_type": "resolution_steps",
+      "prompt_version": "v2",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: Erro na API Gemini (HTTP 404): {\n  \"error\": {\n    \"code\": 40)",
+      "temperature": 0.2,
+      "output": {
+        "greeting_and_tone": "Olá, Carlos Mendes (Analista Financeiro). Como estamos ao telefone, vou te guiar de forma direta em 3 passos rápidos para destravar sua exportação agora:",
+        "estimated_time": "2 minutos na linha",
+        "steps": [
+          {
+            "step_number": 1,
+            "action": "Dividir o filtro de 30 dias em duas quinzenas",
+            "explanation": "Na tela de relatórios, altere a data inicial e final para pegar primeiro do dia 01 ao dia 15 do mês passado e clique em Exportar CSV.",
+            "expected_result": "A barra passará dos 85% rapidamente e o primeiro arquivo CSV será baixado no seu computador."
+          },
+          {
+            "step_number": 2,
+            "action": "Exportar a segunda quinzena (dia 16 ao dia 30/31)",
+            "explanation": "Agora mude o filtro para o período de 16 até o último dia do mês e clique novamente em Exportar CSV.",
+            "expected_result": "Download do segundo arquivo CSV concluído sem travar o navegador."
+          },
+          {
+            "step_number": 3,
+            "action": "Solicitar exportação completa por e-mail em segundo plano",
+            "explanation": "Para futuros relatórios de 30 dias completos, marque a opção \"Enviar link por e-mail\" ao lado do botão Exportar, evitando o processamento pesado na aba do navegador.",
+            "expected_result": "Recebimento do CSV consolidado na sua caixa de entrada em até 2 minutos."
+          }
+        ],
+        "fallback_plan": "Continue na linha comigo: se mesmo com 15 dias a barra travar, eu gero o arquivo CSV aqui pelo painel interno e disparo para o seu e-mail corporativo agora mesmo."
+      },
+      "cached_at": "2026-11-22T01:02:15.894Z"
+    },
+    "8cfaa56ad636ae4db14c15087bea5b88e9a61d39738462d573ce9efe16991c9e": {
+      "customer_id": "cust_01",
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "content_type": "resolution_steps",
+      "prompt_version": "v2",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: Erro na API Gemini (HTTP 404): {\n  \"error\": {\n    \"code\": 40)",
+      "temperature": 0.2,
+      "output": {
+        "greeting_and_tone": "Oi, Dona Helena! Vamos resolver isso juntos agora mesmo aqui pelo chat, passo a passo e com toda segurança para não cobrar seu cliente duas vezes:",
+        "estimated_time": "2 a 3 minutos",
+        "steps": [
+          {
+            "step_number": 1,
+            "action": "Conferir se a venda já entrou (evitar cobrança dupla)",
+            "explanation": "No menu lateral esquerdo da sua tela, clique em \"Minhas Vendas\" e olhe o primeiro pedido da lista (o das 14h). Veja também com o cliente se chegou alguma mensagem do banco no celular dele.",
+            "expected_result": "Se estiver escrito \"Aprovada\" (em verde), a venda já deu certo e você não precisa cobrar de novo! Se estiver \"Não finalizada\" ou não aparecer, siga para o Passo 2."
+          },
+          {
+            "step_number": 2,
+            "action": "Atualizar a tela de vendas para limpar a falha temporária",
+            "explanation": "Aperte a tecla F5 do seu teclado (ou clique na setinha circular ao lado do endereço lá no topo da tela) para renovar a conexão com a operadora do cartão.",
+            "expected_result": "A tela de caixa vai recarregar limpa, sem a mensagem de Erro 502."
+          },
+          {
+            "step_number": 3,
+            "action": "Finalizar a venda novamente com segurança",
+            "explanation": "Com a certeza de que a venda anterior não foi cobrada, preencha os dados do pagamento e clique uma única vez em \"Finalizar pagamento\", aguardando até 10 segundos.",
+            "expected_result": "Aparecerá na tela a mensagem verde \"Pagamento Aprovado\" e o comprovante para impressão."
+          }
+        ],
+        "fallback_plan": "Se a mensagem de Erro 502 aparecer mais uma vez, não tente uma terceira vez: me mande aqui no chat o valor da venda e os 4 últimos números do cartão que eu consulto direto no sistema para você!"
+      },
+      "cached_at": "2026-11-22T01:02:30.420Z"
+    },
+    "485ee6a46fccd343102e2a54c57a80677a3c007f90118934da63be6f940455a1": {
+      "customer_id": "cust_01",
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "content_type": "clarifying_questions",
+      "prompt_version": "v2",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: Erro na API Gemini (HTTP 404): {\n  \"error\": {\n    \"code\": 40)",
+      "temperature": 0.2,
+      "output": {
+        "context_note": "Dona Helena, para eu verificar agora mesmo se a venda foi cobrada ou não, me responda só essas 3 perguntinhas rápidas aqui no chat:",
+        "questions": [
+          {
+            "priority": 1,
+            "question": "Quando a senhora entra em \"Minhas Vendas\", esse pedido das 14h aparece na lista como \"Aprovado\", \"Pendente\" ou não aparece lá?",
+            "why_it_matters": "Confirma imediatamente se o pagamento chegou a ser registrado antes da tela dar erro, evitando cobrar duas vezes.",
+            "target_hypothesis": "H2"
+          },
+          {
+            "priority": 2,
+            "question": "O seu cliente chegou a receber algum aviso ou SMS do banco no celular dele dizendo que a compra foi aprovada?",
+            "why_it_matters": "Verifica se a operadora do cartão aprovou a cobrança mesmo sem a resposta ter voltado para a tela da loja.",
+            "target_hypothesis": "H1"
+          },
+          {
+            "priority": 3,
+            "question": "Qual foi o valor exato dessa venda (e, se tiver fácil, o nome do cliente ou horário aproximado)?",
+            "why_it_matters": "Permite localizar a tentativa exata das 14h no nosso sistema interno sem precisar que a senhora procure códigos técnicos.",
+            "target_hypothesis": "H1"
+          }
+        ]
+      },
+      "cached_at": "2026-11-22T01:02:30.946Z"
+    },
+    "c972bebb43b1aad8defd49833cec551c24ff560c04d8da9ab7a79c7df271e042": {
+      "customer_id": "cust_01",
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "content_type": "flow_summary",
+      "prompt_version": "v2",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: Erro na API Gemini (HTTP 404): {\n  \"error\": {\n    \"code\": 40)",
+      "temperature": 0.2,
+      "output": {
+        "title": "Fluxo Visual de Decisão Calibrado (Dona Helena (Lojista de Bairro) | Nível: LEIGO | Canal: CHAT)",
+        "ascii_flowchart": "+---------------------------------------------------------------+\n| [INÍCIO] Ticket recebido via CHAT     (LEIGO)                 |\n+---------------------------------------------------------------+\n                                |\n                                v\n+---------------------------------------------------------------+\n| PASSO 1: Verificar se a operação já foi concluída no sistema  |\n| (Ex: Tela \"Minhas Vendas\" / Notificação Banco / Status API)   |\n+---------------------------------------------------------------+\n                 /                             \\\n          [JÁ APROVADA]                  [NÃO REGISTRADA]\n               /                                 \\\n              v                                   v\n+------------------------------+   +----------------------------+\n| NÃO COBRAR / NÃO REPETIR!    |   | PASSO 2: Renovar sessão /  |\n| Apenas atualizar a tela (F5) |   | ajustar filtro e tentar 1x |\n| e emitir o comprovante.      |   +----------------------------+\n+------------------------------+                  |\n                                                  v\n                                   +----------------------------+\n                                   | Funcionou na 2ª tentativa? |\n                                   +----------------------------+\n                                         /                \\\n                                      [SIM]              [NÃO]\n                                       /                  \\\n                                      v                    v\n                           +-----------------+  +-------------------+\n                           | Atendimento     |  | Acionar Fallback: |\n                           | Concluído!      |  | Consulta interna  |\n                           +-----------------+  | pelo suporte (N2) |\n                                                +-------------------+",
+        "decision_nodes": [
+          {
+            "condition": "A operação anterior já consta como aprovada/processada em \"Minhas Vendas\" ou no banco do cliente?",
+            "if_yes": "Interromper novas tentativas imediatamente para evitar duplicidade; apenas recarregar a tela e emitir o comprovante.",
+            "if_no": "Prosseguir para a atualização da sessão (F5 / retry idempotente) e executar uma única nova tentativa."
+          },
+          {
+            "condition": "A nova tentativa após atualizar a sessão concluiu em até 10-15 segundos sem Erro 502?",
+            "if_yes": "Confirmar sucesso com o cliente e encerrar o chamado.",
+            "if_no": "Não tentar uma 3ª vez; coletar valor/horário (ou Request-ID) e verificar diretamente na retaguarda do gateway."
+          }
+        ]
+      },
+      "cached_at": "2026-11-22T01:02:31.335Z"
+    },
+    "e40c91e94a727bda7d6ac0f32342f9637183c19b819a40df06b33e77a99e5051": {
+      "customer_id": "cust_02",
+      "ticket": "Preciso baixar o relatório de fechamento do mês passado em CSV. Quando filtro o período de 30 dias e clico em Exportar, a barra trava em 85% e o navegador mostra que a página parou de responder.",
+      "content_type": "diagnosis",
+      "prompt_version": "v2",
+      "provider": "mock-fallback",
+      "model": "gemini-2.5-flash (fallback offline: fetch failed)",
+      "temperature": 0.2,
+      "output": {
+        "summary": "Diagnóstico objetivo (Carlos Mendes (Analista Financeiro)): O travamento ocorre porque o volume de dados ou tempo de resposta excedeu o limite da operação direta pelo navegador.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Volume de registros do período selecionado (30 dias) excede o tempo limite de geração direta no navegador (travando em 85%).",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "Acúmulo de cache ou extensão do navegador bloqueando o disparo automático do download do arquivo CSV.",
+            "likelihood": "média"
+          }
+        ],
+        "available_evidence": [
+          "Progresso trava consistentemente em 85% ao filtrar 30 dias.",
+          "Alerta do navegador indicando que a página parou de responder."
+        ],
+        "missing_data": [
+          "Quantidade aproximada de linhas/transações no mês filtrado.",
+          "Se o download funciona ao filtrar apenas 7 ou 15 dias."
+        ],
+        "probable_conclusion": "A exportação de 30 dias completos está atingindo o limite de memória da aba. Dividir o filtro em duas quinzenas destrava o fechamento imediatamente."
+      },
+      "cached_at": "2026-11-22T01:05:00.472Z"
+    },
+    "10fb2eaa62bd3e0c6e940082d6746f0bab8844e0b8ecb69715dc84147bee1941": {
+      "customer_id": "cust_04",
+      "ticket": "Preciso baixar o relatório de fechamento do mês passado em CSV. Quando filtro o período de 30 dias e clico em Exportar, a barra trava em 85% e o navegador mostra que a página parou de responder.",
+      "content_type": "diagnosis",
+      "prompt_version": "v2",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "temperature": 0.2,
+      "output": {
+        "summary": "Identificamos uma interrupção crítica no processamento da exportação do relatório mensal em CSV ao filtrar 30 dias. O travamento da barra de progresso em 85% associado ao alerta de página sem resposta indica que a montagem dos dados excedeu a capacidade de memória temporária do navegador ou sofreu um timeout na finalização do arquivo.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Sobrecarga de memória no navegador (Memory Leak/Client Timeout) ao tentar compilar e baixar um volume extenso de registros de 30 dias de uma única vez, congelando a aba.",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "Timeout na resposta do servidor durante o processamento final da consulta ao banco de dados, interrompendo o fluxo de envio do arquivo antes da conclusão.",
+            "likelihood": "média"
+          },
+          {
+            "id": "H3",
+            "description": "Interferência de extensões ativas ou acúmulo de cache no navegador, que bloqueiam a gravação do arquivo temporário localmente ao atingir a etapa final da transferência.",
+            "likelihood": "baixa"
+          }
+        ],
+        "available_evidence": [
+          "Solicitação de exportação em formato CSV com filtro de período de 30 dias.",
+          "A barra de progresso avança até 85% e congela de forma consistente.",
+          "O navegador exibe a mensagem explícita de que a página parou de responder."
+        ],
+        "missing_data": [
+          "Identificação do navegador utilizado e sua versão (ex: Google Chrome, Microsoft Edge, Firefox).",
+          "Volume aproximado de registros/transações compreendidos no fechamento desses 30 dias.",
+          "Resultado de tentativa de exportação com período fracionado (ex: exportar em duas partes de 15 dias).",
+          "Comportamento do sistema ao realizar o mesmo procedimento em uma janela anônima sem extensões.",
+          "Presença de mensagens de erro específicas no console do navegador (acessível via tecla F12)."
+        ],
+        "probable_conclusion": "A causa mais provável é o esgotamento de recursos do navegador devido ao volume elevado de dados gerados nos 30 dias. Recomendamos como contingência imediata fracionar a extração em intervalos menores (ex: quinzenal ou semanal) para viabilizar o fechamento operacional, além de testar o download em aba anônima para descartar bloqueios por extensões locais."
+      },
+      "cached_at": "2026-11-22T01:07:15.970Z"
     }
   }
 }
