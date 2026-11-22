@@ -49,7 +49,7 @@ O módulo [`src/prompts/engine.js`](./src/prompts/engine.js) compila cada prompt
 
 ## 4. Resultado da Rubrica Obrigatória (`v1` vs `v2`)
 
-Cenário avaliado no Harness (salvo em [`samples/comparison_v1_vs_v2_diagnosis_cust_01.json`](./samples/comparison_v1_vs_v2_diagnosis_cust_01.json) e [`samples/comparison_v1_vs_v2_resolution_cust_01.json`](./samples/comparison_v1_vs_v2_resolution_cust_01.json)):
+Cenário avaliado no Harness (salvo em [`samples/comparison_cust_01_diagnosis_v1_vs_v2.json`](./samples/comparison_cust_01_diagnosis_v1_vs_v2.json) e [`data/history.json`](./data/history.json)):
 - **Cliente**: `cust_01` — Dona Helena (Lojista de Bairro | Nível: `leigo` | Estilo: `didático` | Canal: `chat`)
 - **Ticket (`tkt_01`)**: *"Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança."*
 
@@ -70,7 +70,7 @@ Cenário avaliado no Harness (salvo em [`samples/comparison_v1_vs_v2_diagnosis_c
 2. **Cache Determinístico SHA-256 em Disco (`data/cache.json`)**:
    - *Decisão*: Normalizar o texto do ticket (`trim` + colapso de múltiplos espaços) e gerar um hash SHA-256 da tupla `(customer_id, ticket, content_type, prompt_version, provider, model, temperature)`.
    - *Trade-off*: O cache é exato/canônico (não semântico). Pequenas alterações de pontuação no ticket geram uma nova chave, garantindo reprodutibilidade estrita nos experimentos do Harness sem falsos positivos de similaridade vetorial.
-3. **Dual-Mode LLM Engine (Google Gemini API + Simulador Determinístico Offline)**:
-   - *Decisão*: O sistema conecta nativamente à API `generativelanguage.googleapis.com` (`gemini-2.5-flash`) quando `GEMINI_API_KEY` está configurada no `.env`, e conta com um simulador determinístico sensível às diferenças entre `v1` e `v2` para execução offline, testes automatizados (`npm test`) e avaliação reprodutível sem expor segredos no repositório.
-   - *Limitação*: O modo simulado cobre com alta fidelidade os cenários de referência e perfis cadastrados, enquanto variações abertas de domínio dependem da chave `GEMINI_API_KEY` ativa para inferência generativa completa.
+3. **Integração Nativa com Google Gemini API (`gemini-3.8-flash`) e Resiliência HTTP**:
+   - *Decisão*: O sistema conecta nativamente à API `generativelanguage.googleapis.com` (`gemini-3.8-flash`) usando `fetch` nativo do Node.js, `responseMimeType: "application/json"` e retry exponencial para lidar com picos temporários (`HTTP 503 / 429`).
+   - *Limitação*: Chamadas inéditas (*Cache Miss*) dependem da latência de rede da API do Google Gemini e da disponibilidade de cota da `GEMINI_API_KEY`, sendo imediatamente aceleradas em chamadas subsequentes pelo cache SHA-256.
 

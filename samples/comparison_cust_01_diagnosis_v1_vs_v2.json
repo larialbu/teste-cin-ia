@@ -1,13 +1,13 @@
 {
-  "harness_run_id": "harness_1795310185089",
-  "timestamp": "2026-11-22T01:16:25.089Z",
+  "harness_run_id": "harness_1795310243785",
+  "timestamp": "2026-11-22T01:17:23.785Z",
   "controlled_variables": {
     "customer_id": "cust_01",
     "customer_name": "Dona Helena (Lojista de Bairro)",
     "technical_level": "leigo",
     "communication_style": "didático",
     "channel": "chat",
-    "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+    "ticket": "Nossa integração via API começou a receber HTTP 401 Unauthorized em cerca de 20% das chamadas POST /v2/orders após a rotação do token OAuth, mesmo com o token dentro da validade de 3600s.",
     "content_type": "diagnosis",
     "provider": "gemini",
     "model": "gemini-3.8-flash",
@@ -18,9 +18,9 @@
     {
       "prompt_version": "v1",
       "clarity": 3,
-      "customer_fit": 3,
+      "customer_fit": 2,
       "actionability": 3,
-      "average_score": 3,
+      "average_score": 2.67,
       "cache_hit": true
     },
     {
@@ -35,8 +35,8 @@
   "winner": "v2",
   "executions": [
     {
-      "id": "exec_c56a5091",
-      "timestamp": "2026-11-22T01:14:19.501Z",
+      "id": "exec_0afccb66",
+      "timestamp": "2026-11-22T01:15:09.252Z",
       "customer_id": "cust_01",
       "customer_profile": {
         "name": "Dona Helena (Lojista de Bairro)",
@@ -44,45 +44,44 @@
         "communication_style": "didático",
         "channel": "chat"
       },
-      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "ticket": "Nossa integração via API começou a receber HTTP 401 Unauthorized em cerca de 20% das chamadas POST /v2/orders após a rotação do token OAuth, mesmo com o token dentro da validade de 3600s.",
       "prompt_version": "v1",
       "content_type": "diagnosis",
       "provider": "gemini",
       "model": "gemini-3.8-flash",
       "temperature": 0.2,
-      "cache_key": "1706a61fbe596e880d985e939f48372824fad7f5d56ec7c19e22f9e5727d4b1f",
+      "cache_key": "dcc87347f09d9af616a7da704080233330bca46f91fe2fdaf099459cbd522a13",
       "cache_hit": true,
       "output": {
-        "summary": "A cliente Dona Helena está enfrentando uma falha de comunicação (Erro 502 com timeout de 30s) entre o sistema de vendas e a operadora do cartão, necessitando de verificação prévia no extrato do gateway antes de nova tentativa para evitar cobrança duplicada.",
+        "summary": "Parte dos pedidos enviados pelo sistema da loja (cerca de 1 a cada 5) está sendo recusada por erro de acesso logo após a troca da credencial, indicando que algumas tentativas ainda estão usando a credencial antiga desatualizada.",
         "hypotheses": [
           {
             "id": "H1",
-            "description": "Timeout de conexão entre a plataforma de vendas e a adquirente/gateway de pagamento, fazendo com que o servidor encerre a espera após 30 segundos sem confirmação.",
+            "description": "Falta de sincronização de cache em ambiente com múltiplos servidores ou processos, fazendo com que uma parte das requisições use o token antigo já revogado.",
             "likelihood": "alta"
           },
           {
             "id": "H2",
-            "description": "Instabilidade geral ou queda temporária dos serviços do gateway de pagamento parceiro.",
+            "description": "Condição de corrida durante a rotina de atualização de token, onde requisições concorrentes continuam usando o token anterior até a finalização do ciclo de renovação.",
             "likelihood": "média"
           },
           {
             "id": "H3",
-            "description": "Interrupção na conexão de internet local da lojista durante o envio dos dados da transação.",
+            "description": "Atraso pontual na replicação interna do novo token entre os servidores de autenticação da plataforma.",
             "likelihood": "baixa"
           }
         ],
         "available_evidence": [
-          "Tentativa de finalizar pagamento com cartão recorrente desde as 14h.",
-          "Tempo de espera de aproximadamente 30 segundos na tela de carregamento.",
-          "Mensagem explícita de 'Erro 502 - Falha na comunicação com o gateway'.",
-          "Incerteza sobre a efetivação da cobrança e risco de duplicidade."
+          "Recebimento de erro HTTP 401 Unauthorized em aproximadamente 20% das chamadas para POST /v2/orders.",
+          "O problema teve início imediatamente após a rotação do token OAuth.",
+          "O token gerado está dentro do tempo limite de validade de 3600 segundos."
         ],
         "missing_data": [
-          "Identificador do pedido (ID da venda) ou valor exato da transação.",
-          "Consulta aos logs de transações do gateway para verificar se houve pré-autorização ou captura.",
-          "Status de operação da API da adquirente/gateway no horário indicado."
+          "Confirmação se a aplicação da loja utiliza múltiplos servidores, instâncias ou workers em paralelo.",
+          "Logs detalhados das requisições que falharam mostrando se o token enviado nelas é idêntico ao das requisições com sucesso.",
+          "Estrutura utilizada pelo sistema integrador para armazenar e compartilhar o token (ex: memória local, Redis, banco de dados)."
         ],
-        "probable_conclusion": "Trata-se de um esgotamento de tempo (timeout) de resposta do gateway parceiro. A recomendação imediata é não retentar o pagamento antes de consultar o painel de transações da adquirente/gateway para checar se o valor consta como aprovado, prevenindo cobranças duplicadas ao comprador."
+        "probable_conclusion": "O cenário mais provável é que a loja possua instâncias distribuídas e uma delas ainda esteja consultando um token antigo mantido em cache local. Recomenda-se à equipe técnica responsável alinhar o armazenamento do token de forma centralizada ou reiniciar as instâncias para forçar o uso da nova credencial."
       },
       "evaluation": {
         "clarity": {
@@ -90,7 +89,7 @@
           "justification": "A saída da v1 é estruturada nos campos solicitados e gramaticalmente compreensível, porém apresenta termos técnicos sem contextualização e pouca formatação voltada à leitura rápida no canal do cliente."
         },
         "customer_fit": {
-          "score": 3,
+          "score": 2,
           "justification": "Fraca adequação ao perfil leigo/didático: a v1 utiliza jargões de engenharia (upstream timeout, idempotência, commit/rollback, Request-ID) que geram insegurança e confusão para uma lojista não técnica no chat."
         },
         "actionability": {
@@ -100,8 +99,8 @@
       }
     },
     {
-      "id": "exec_998dc56f",
-      "timestamp": "2026-11-22T01:16:25.088Z",
+      "id": "exec_d2c2276d",
+      "timestamp": "2026-11-22T01:17:23.785Z",
       "customer_id": "cust_01",
       "customer_profile": {
         "name": "Dona Helena (Lojista de Bairro)",
@@ -109,45 +108,45 @@
         "communication_style": "didático",
         "channel": "chat"
       },
-      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "ticket": "Nossa integração via API começou a receber HTTP 401 Unauthorized em cerca de 20% das chamadas POST /v2/orders após a rotação do token OAuth, mesmo com o token dentro da validade de 3600s.",
       "prompt_version": "v2",
       "content_type": "diagnosis",
       "provider": "gemini",
       "model": "gemini-3.8-flash",
       "temperature": 0.2,
-      "cache_key": "cb02ac0cba2a637d5f8249d4570ab4d8a8c9e678a207bdaa67f0431591cf913f",
+      "cache_key": "955bf3b8b463e62ff125333a81b7132791893b3780b8e90c8af9f9a458bb372d",
       "cache_hit": true,
       "output": {
-        "summary": "Olá, Dona Helena! O sistema demorou para responder e deu o 'Erro 502', que nada mais é do que uma falha temporária de conversa entre a nossa loja e a empresa da maquininha/cartão. Pode ficar tranquila que vamos checar o painel de pedidos antes de qualquer nova tentativa para garantir que não haja cobrança duplicada no cartão do seu cliente.",
+        "summary": "Olá, Dona Helena! Fique tranquila: seus pedidos e vendas estão seguros. O que está ocorrendo é que, após a troca recente da 'chave digital' de segurança do seu sistema, cerca de 1 a cada 5 pedidos recebe um aviso de 'acesso não reconhecido' (o erro 401), como se uma porta do sistema ainda estivesse tentando usar a chave antiga por engano.",
         "hypotheses": [
           {
             "id": "H1",
-            "description": "Tempo limite esgotado (timeout) na comunicação externa: a plataforma tentou contato com a processadora de cartões por 30 segundos sem receber resposta a tempo, gerando o erro de comunicação (502).",
+            "description": "Parte dos computadores/servidores que enviam seus pedidos ainda guardou a chave antiga na memória temporária (cache dessincronizado entre instâncias).",
             "likelihood": "alta"
           },
           {
             "id": "H2",
-            "description": "Instabilidade momentânea na conexão de internet da loja no momento exato do envio dos dados do pagamento.",
+            "description": "Pequeno atraso de comunicação na central de segurança para avisar a todos os computadores que uma nova chave foi gerada (atraso de propagação).",
             "likelihood": "média"
           },
           {
             "id": "H3",
-            "description": "Retenção temporária do pedido pelo sistema de segurança/antifraude da operadora, interrompendo a confirmação imediata da venda.",
+            "description": "Tentativas simultâneas de atualizar a chave no mesmo segundo, gerando conflito temporário entre os envios.",
             "likelihood": "baixa"
           }
         ],
         "available_evidence": [
-          "Tentativa recorrente de finalizar a venda na plataforma desde as 14h.",
-          "A tela de finalização de cartão fica carregando por aproximadamente 30 segundos antes de falhar.",
-          "Exibição textual da mensagem 'Erro 502 - Falha na comunicação com o gateway'.",
-          "Dúvida e receio da lojista quanto à cobrança já ter ocorrido ou risco de duplicidade."
+          "O sistema retorna erro HTTP 401 Unauthorized (falha de permissão de acesso).",
+          "O problema atinge aproximadamente 20% das tentativas de envio de pedidos (POST /v2/orders).",
+          "A instabilidade começou logo após a troca da chave de segurança (rotação do token OAuth).",
+          "A nova chave informada ainda está dentro do prazo válido de uso (3600 segundos)."
         ],
         "missing_data": [
-          "Número de identificação do pedido ou carrinho gerado na plataforma.",
-          "Consulta ao extrato do painel de pagamentos/gateway para conferir se há transação pendente, aprovada ou recusada para este cliente.",
-          "Confirmação se o cliente da loja recebeu algum aviso de cobrança no aplicativo do banco dele."
+          "Identificação de qual servidor ou máquina específica gerou cada chamada com falha (logs com IP de origem).",
+          "Confirmação se a sua loja opera com múltiplos servidores de integração em paralelo.",
+          "O código de rastreamento (Correlation ID ou Request ID) retornado junto com os erros 401."
         ],
-        "probable_conclusion": "O mais provável é que a operadora de cartão demorou para responder e a transação não foi concluída. Recomendação imediata: não tente passar a venda de novo agora. Primeiro, acesse a aba 'Vendas / Pedidos' no seu painel para ver se o pedido consta como 'Pendente' ou 'Não autorizado'. Estou aqui no chat para conferir esse código de pedido junto com a senhora antes de tentar novamente, garantindo total segurança para você e seu cliente."
+        "probable_conclusion": "O cenário mais provável é que um dos servidores da sua integração não recebeu a chave nova e continua usando a antiga. Para resolvermos rapidamente enquanto conversamos, recomendo solicitar ao seu técnico ou suporte local que faça o reinício (restart) das aplicações de envio de pedidos para limpar a memória temporária (cache) e forçar todos a pegarem a chave nova."
       },
       "evaluation": {
         "clarity": {

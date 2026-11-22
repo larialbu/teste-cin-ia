@@ -96,14 +96,13 @@ flowchart LR
    cp .env.example .env
    ```
 
-3. *(Opcional)* Insira sua chave gratuita do Google AI Studio (`GEMINI_API_KEY`) no arquivo `.env`:
+3. Configure sua chave gratuita do Google AI Studio (`GEMINI_API_KEY`) no arquivo `.env`:
    ```env
    LLM_PROVIDER=gemini
    GEMINI_API_KEY=sua_chave_aqui
-   GEMINI_MODEL=gemini-2.5-flash
+   GEMINI_MODEL=gemini-3.8-flash
    LLM_TEMPERATURE=0.2
    ```
-   > **Nota sobre Reprodutibilidade**: Caso você execute o projeto sem configurar uma `GEMINI_API_KEY` real (ou com `LLM_PROVIDER=mock`), o sistema ativa automaticamente o motor determinístico offline sensível ao perfil e à versão do prompt (`v1` vs `v2`), permitindo testar toda a CLI, o cache, a interface web e o Evaluation Harness imediatamente.
 
 ---
 
@@ -168,11 +167,9 @@ npm test
 
 ## 4. Exemplos de Saída (`/samples`)
 
-O diretório [`samples/`](./samples/) contém execuções completas em JSON:
-- [`samples/comparison_v1_vs_v2_diagnosis_cust_01.json`](./samples/comparison_v1_vs_v2_diagnosis_cust_01.json): Comparação controlada entre `v1` e `v2` para `diagnosis` no cenário `cust_01` (Dona Helena - `leigo`/`didático`/`chat`) + `tkt_01` (Erro 502 no pagamento), incluindo as notas de 1 a 5 e justificativas escritas nos 3 critérios da rubrica (`clarity`, `customer_fit`, `actionability`).
-- [`samples/comparison_v1_vs_v2_resolution_cust_01.json`](./samples/comparison_v1_vs_v2_resolution_cust_01.json): Comparação controlada entre `v1` e `v2` para `resolution_steps` no mesmo cenário.
-- [`samples/full_4_contents_cust_01_v2.json`](./samples/full_4_contents_cust_01_v2.json): Pacote completo com os 4 tipos de conteúdo gerados para perfil `leigo`.
-- [`samples/full_4_contents_cust_03_advanced_v2.json`](./samples/full_4_contents_cust_03_advanced_v2.json): Pacote completo com os 4 tipos de conteúdo gerados para perfil `avançado` (Engenheira DevOps/SRE via `e-mail`).
+O diretório [`samples/`](./samples/) contém execuções reais geradas na API do Google Gemini (`gemini-3.8-flash`) em JSON:
+- [`samples/comparison_cust_01_diagnosis_v1_vs_v2.json`](./samples/comparison_cust_01_diagnosis_v1_vs_v2.json): Comparação controlada entre `v1` e `v2` para `diagnosis` no cenário `cust_01` (Dona Helena - `leigo`/`didático`/`chat`) + `tkt_01` (Erro 502 no pagamento), incluindo as notas de 1 a 5 e justificativas escritas nos 3 critérios da rubrica (`clarity`, `customer_fit`, `actionability`).
+- [`samples/full_4_contents_cust_01_v2.json`](./samples/full_4_contents_cust_01_v2.json): Pacote completo com os 4 tipos de conteúdo (`diagnosis`, `resolution_steps`, `clarifying_questions` e `flow_summary` com fluxograma ASCII) gerados pela API do Google Gemini.
 
 Para a explicação aprofundada das estratégias de engenharia de prompt, consulte [`PROMPT_ENGINEERING_NOTES.md`](./PROMPT_ENGINEERING_NOTES.md).
 

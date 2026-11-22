@@ -50,17 +50,29 @@ async function callGeminiApi({
   const maxAttempts = 4;
   let response;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature,
-          responseMimeType: 'application/json',
-        },
-      }),
-    });
+    try {
+      response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature,
+            responseMimeType: 'application/json',
+          },
+        }),
+      });
+    } catch (netErr) {
+      if (attempt < maxAttempts) {
+        const waitMs = attempt * 2500;
+        console.warn(
+          `[GEMINI API -> RETRY ${attempt}/${maxAttempts - 1}] Oscilação de rede (${netErr.message}). Aguardando ${waitMs}ms...`
+        );
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      throw netErr;
+    }
 
     if (response.ok) break;
 

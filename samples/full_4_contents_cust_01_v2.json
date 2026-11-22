@@ -1,0 +1,181 @@
+{
+  "generated_at": "2026-11-22T01:33:11.250Z",
+  "customer_id": "cust_01",
+  "prompt_version": "v2",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "contents": {
+    "diagnosis": {
+      "id": "exec_db0600c3",
+      "timestamp": "2026-11-22T01:32:13.644Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v2",
+      "content_type": "diagnosis",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "temperature": 0.2,
+      "cache_key": "cb02ac0cba2a637d5f8249d4570ab4d8a8c9e678a207bdaa67f0431591cf913f",
+      "cache_hit": true,
+      "output": {
+        "summary": "Olá, Dona Helena! O sistema demorou para responder e deu o 'Erro 502', que nada mais é do que uma falha temporária de conversa entre a nossa loja e a empresa da maquininha/cartão. Pode ficar tranquila que vamos checar o painel de pedidos antes de qualquer nova tentativa para garantir que não haja cobrança duplicada no cartão do seu cliente.",
+        "hypotheses": [
+          {
+            "id": "H1",
+            "description": "Tempo limite esgotado (timeout) na comunicação externa: a plataforma tentou contato com a processadora de cartões por 30 segundos sem receber resposta a tempo, gerando o erro de comunicação (502).",
+            "likelihood": "alta"
+          },
+          {
+            "id": "H2",
+            "description": "Instabilidade momentânea na conexão de internet da loja no momento exato do envio dos dados do pagamento.",
+            "likelihood": "média"
+          },
+          {
+            "id": "H3",
+            "description": "Retenção temporária do pedido pelo sistema de segurança/antifraude da operadora, interrompendo a confirmação imediata da venda.",
+            "likelihood": "baixa"
+          }
+        ],
+        "available_evidence": [
+          "Tentativa recorrente de finalizar a venda na plataforma desde as 14h.",
+          "A tela de finalização de cartão fica carregando por aproximadamente 30 segundos antes de falhar.",
+          "Exibição textual da mensagem 'Erro 502 - Falha na comunicação com o gateway'.",
+          "Dúvida e receio da lojista quanto à cobrança já ter ocorrido ou risco de duplicidade."
+        ],
+        "missing_data": [
+          "Número de identificação do pedido ou carrinho gerado na plataforma.",
+          "Consulta ao extrato do painel de pagamentos/gateway para conferir se há transação pendente, aprovada ou recusada para este cliente.",
+          "Confirmação se o cliente da loja recebeu algum aviso de cobrança no aplicativo do banco dele."
+        ],
+        "probable_conclusion": "O mais provável é que a operadora de cartão demorou para responder e a transação não foi concluída. Recomendação imediata: não tente passar a venda de novo agora. Primeiro, acesse a aba 'Vendas / Pedidos' no seu painel para ver se o pedido consta como 'Pendente' ou 'Não autorizado'. Estou aqui no chat para conferir esse código de pedido junto com a senhora antes de tentar novamente, garantindo total segurança para você e seu cliente."
+      }
+    },
+    "resolution_steps": {
+      "id": "exec_ab5dcba2",
+      "timestamp": "2026-11-22T01:32:13.645Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v2",
+      "content_type": "resolution_steps",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "temperature": 0.2,
+      "cache_key": "d51fa944ef6bce73ac61232a325fe41ae18a91df042c15481d39c01a8428274f",
+      "cache_hit": true,
+      "output": {
+        "greeting_and_tone": "Olá, Dona Helena! Fique tranquila, compreendo sua preocupação e estou aqui para te ajudar. Vamos conferir tudo com calma para garantir que o seu cliente não seja cobrado duas vezes. Esse 'Erro 502' é apenas uma falha temporária de comunicação, como se a ligação entre a nossa loja e a maquininha virtual do cartão tivesse caído por alguns instantes.",
+        "estimated_time": "3 a 4 minutos",
+        "steps": [
+          {
+            "step_number": 1,
+            "action": "Conferir o histórico de vendas",
+            "explanation": "Antes de tentar passar o cartão de novo, vamos ter certeza de que o valor não foi cobrado. No menu do lado esquerdo da sua tela, clique em 'Vendas' (ou 'Pedidos') e procure pela venda com o horário de agora.",
+            "expected_result": "Se o pedido não aparecer como 'Aprovado' ou 'Pago' na lista, temos a certeza de que a cobrança NÃO foi realizada e podemos prosseguir com segurança."
+          },
+          {
+            "step_number": 2,
+            "action": "Atualizar a página da venda",
+            "explanation": "Volte para a tela da venda e aperte a tecla F5 no seu teclado (ou clique na setinha redonda no topo da tela para recarregar). Isso ajuda a renovar a conexão com o sistema de pagamentos.",
+            "expected_result": "A página recarregará limpa, mostrando novamente o botão de finalizar pagamento pronto para ser clicado."
+          },
+          {
+            "step_number": 3,
+            "action": "Tentar concluir a cobrança novamente",
+            "explanation": "Selecione novamente a opção de cartão, confira os dados e clique em 'Finalizar Pagamento' apenas uma vez, aguardando o sistema responder sem fechar a página.",
+            "expected_result": "Aparecerá uma mensagem verde na tela informando 'Venda Concluída com Sucesso' junto ao comprovante."
+          }
+        ],
+        "fallback_plan": "Se a tela voltar a carregar por 30 segundos e der o mesmo erro, por favor me avise aqui no chat e me informe o valor da venda. Eu verifico a conexão da operadora por aqui e posso te orientar a gerar um Pix ou link alternativo para você não perder a venda do cliente."
+      }
+    },
+    "clarifying_questions": {
+      "id": "exec_bbaac1ac",
+      "timestamp": "2026-11-22T01:32:13.646Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v2",
+      "content_type": "clarifying_questions",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "temperature": 0.2,
+      "cache_key": "7d9d3287ebb5ee3ef205cb0154c3e2b30014841026b6929fce54a6d64352bc2e",
+      "cache_hit": true,
+      "output": {
+        "context_note": "Olá, Dona Helena! Compreendo totalmente a sua preocupação com a cobrança do cliente. Esse 'Erro 502' funciona como uma ligação que caiu no meio do caminho entre a nossa lojinha virtual e a maquininha/operadora do cartão antes de confirmarem o pagamento. Para garantirmos que nada seja cobrado duas vezes e resolvermos isso rapidinho juntas aqui no chat, a senhora poderia me ajudar conferindo estes 3 pontos simples?",
+        "questions": [
+          {
+            "priority": 1,
+            "question": "Dona Helena, dando uma olhadinha no menu 'Vendas' ou 'Pedidos' aí na sua tela, esse pedido aparece listado com algum status (por exemplo: 'Aprovado', 'Pendente' ou 'Cancelado'), ou ele nem chegou a aparecer na lista?",
+            "why_it_matters": "Descobrir se o sistema registrou a venda internamente antes da falha de comunicação, evitando qualquer risco de cobrança duplicada ao tentar de novo.",
+            "target_hypothesis": "H1"
+          },
+          {
+            "priority": 2,
+            "question": "O seu cliente ainda está aí com a senhora ou consegue avisar se ele recebeu alguma notificação no aplicativo do banco avisando que a compra foi aprovada?",
+            "why_it_matters": "Verificar diretamente se a operadora do cartão do cliente chegou a processar o pagamento, mesmo com a tela da loja travando nos 30 segundos.",
+            "target_hypothesis": "H2"
+          },
+          {
+            "priority": 3,
+            "question": "A senhora tentou passar outro cartão ou realizar alguma outra venda depois das 14h e funcionou normal, ou o problema aconteceu em todas as tentativas?",
+            "why_it_matters": "Identificar se é uma instabilidade pontual com a bandeira daquele cartão específico ou uma oscilação geral no canal de pagamentos.",
+            "target_hypothesis": "H3"
+          }
+        ]
+      }
+    },
+    "flow_summary": {
+      "id": "exec_d9c6f3f6",
+      "timestamp": "2026-11-22T01:33:00.319Z",
+      "customer_id": "cust_01",
+      "customer_profile": {
+        "name": "Dona Helena (Lojista de Bairro)",
+        "technical_level": "leigo",
+        "communication_style": "didático",
+        "channel": "chat"
+      },
+      "ticket": "Estou tentando fechar uma venda na plataforma desde as 14h, mas quando clico em finalizar pagamento com cartão a tela fica carregando por uns 30 segundos e depois aparece 'Erro 502 - Falha na comunicação com o gateway'. Não sei se o valor foi cobrado do cartão ou se posso tentar de novo sem duplicar a cobrança.",
+      "prompt_version": "v2",
+      "content_type": "flow_summary",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "temperature": 0.2,
+      "cache_key": "de1ec3a5fcfeeb410e892767c449f2430afcfcb26e4d4daf52523b9afad76eb4",
+      "cache_hit": false,
+      "output": {
+        "title": "Fluxo Didático de Diagnóstico e Prevenção de Cobrança Duplicada (Chat)",
+        "ascii_flowchart": "+-------------------------------------------------+\n| INÍCIO: Acolher Dona Helena e tranquilizá-la    |\n+-------------------------------------------------+\n                         |\n                         v\n+-------------------------------------------------+\n| Passo 1: Olhar o menu 'Vendas / Pedidos'        |\n| A venda aparece como 'Aprovada' ou 'Paga'?      |\n+-------------------------------------------------+\n       |                                   |\n    [SIM]                                [NÃO]\n       |                                   |\n       v                                   v\n+------------------------+      +--------------------------------+\n| Cobrança já deu certo! |      | Nada foi cobrado do cartão.    |\n| NÃO passar novamente   |      | É seguro tentar outra vez      |\n| Emitir comprovante     |      +--------------------------------+\n+------------------------+                         |\n                                                   v\n                                +--------------------------------+\n                                | Ao tentar de novo, o erro 502  |\n                                | (falha de sinal) repetiu?      |\n                                +--------------------------------+\n                                       |                  |\n                                    [SIM]               [NÃO]\n                                       |                  |\n                                       v                  v\n                       +-----------------------+ +--------------------+\n                       | Sistema da maquininha | | Parabéns! Venda    |\n                       | fora do ar: usar Pix  | | finalizada com     |\n                       | ou tentar em 10 min   | | segurança          |\n                       +-----------------------+ +--------------------+",
+        "decision_nodes": [
+          {
+            "condition": "A venda já aparece na tela de 'Vendas/Pedidos' como confirmada?",
+            "if_yes": "Tranquilizar Dona Helena: o pagamento deu certo! Não clique em pagar novamente para evitar cobrança dupla. Apenas entregue o comprovante.",
+            "if_no": "Explicar que o valor não foi descontado. Como a comunicação caiu antes de validar, é seguro clicar para tentar passar a venda mais uma vez."
+          },
+          {
+            "condition": "Na nova tentativa de pagamento, a tela ainda trava e mostra o 'Erro 502'?",
+            "if_yes": "Explicar que a ponte de comunicação com a operadora do cartão está temporariamente fora do ar. Recomendar aguardar cerca de 10 minutos ou oferecer pagamento via Pix/dinheiro ao cliente.",
+            "if_no": "A comunicação foi restabelecida com sucesso. Concluir a venda normalmente e orientar a impressão do comprovante."
+          }
+        ]
+      }
+    }
+  }
+}
